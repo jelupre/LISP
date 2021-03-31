@@ -139,3 +139,33 @@
 (print (ПЕРВЫЙ-СОВПАДАЮЩИЙ '(9 5 7 2 3) '(2 8 4 3 7)))
 (print (ПЕРВЫЙ-СОВПАДАЮЩИЙ '() '(2 8 4 3 7)))
 (print (ПЕРВЫЙ-СОВПАДАЮЩИЙ '(9 5 7 2 3) '()))
+
+
+;№32. Определите предикат МНОЖЕСТВО-Р, который проверяет, является ли список множеством, т.е. входит ли каждый элемент в список лишь один раз.
+
+(defun how_much (lst num cnt)
+    (cond
+        ((null lst) cnt)
+        ((equal (car lst) num) (how_much (cdr lst) num (+ cnt 1)))
+        (t (how_much (cdr lst) num cnt))
+    )
+)
+
+(defun is_set (lst const_lst)
+    (cond 
+        ((null lst) t)
+        ((> (how_much const_lst (car lst) 0) 1) NIL)
+        (t (is_set (cdr lst) const_lst))
+    )
+)
+
+(defun МНОЖЕСТВО-Р (lst)
+    (is_set lst lst)
+)
+
+(print '(test cases for 32 problem))
+(print (МНОЖЕСТВО-Р '(1 2 3 4)))
+(print (МНОЖЕСТВО-Р '(1 1 3 4)))
+(print (МНОЖЕСТВО-Р '()))
+
+
