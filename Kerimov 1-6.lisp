@@ -82,20 +82,18 @@
 (print (split () () ()))
 
 
-;Определите функцию, вычисляющую скалярное произведение векторов, заданных списками целых чисел.
+;№15. Определите функцию, вычисляющую скалярное произведение векторов, заданных списками целых чисел.
 
-(defun inner_product (l1 l2 sum)
+(defun inner_product (lst1 lst2 sum)
     (cond
-        ((null l1) sum)
-        (t (+ (inner_product (cdr l1) (cdr l2) sum) (* (car l1) (car l2))))
+        ((null lst1) sum)
+        (t (+ (inner_product (cdr lst1) (cdr lst2) sum) (* (car lst1) (car lst2))))
     )
 )
 
-(print '(15 задача))
+(print '(test cases for 15 problem))
 (print (inner_product '(1 2 3) '(4 5 6) 0))
-;32
 (print (inner_product () () 0))
-;0 
 
 
 ;№22. Определите функцию,которая обращает список (а b с) и разбивает его на уровни (((с) b) а).
