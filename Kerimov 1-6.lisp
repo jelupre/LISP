@@ -42,7 +42,8 @@
 (print (trans ()))
 ;NIL
 
-;Определите функцию, разделяющую исходный список на два подсписка. Впервый из них должны попасть элементы с нечетными номерами, во второй элементы с четными номерами.
+
+;№9. Определите функцию, разделяющую исходный список на два подсписка. Впервый из них должны попасть элементы с нечетными номерами, во второй элементы с четными номерами.
 
 (defun len (w n)
     (cond 
@@ -59,24 +60,26 @@
 
 (defun rev (lst lst1)
     (cond 
-        ((Null lst)  lst1)
+        ((null lst)  lst1)
         (t (rev (cdr lst) (cons (car lst) lst1)))
     )
 )
 
 (defun split (w ls1 ls2)
-    (cond
-        ((null w) (list (rev ls1 ()) (rev ls2 ())))
-        ((eql (% (len w 0) 2) 1) (split (cdr w) (cons (car w) ls1) ls2))
-        (t (split (cdr w) ls1 (cons (car w) ls2)))
+    ((lambda (f1 f2)
+        (cond
+            ((null w) (list (rev ls1 ()) (rev ls2 ())))
+            ((eql (% (len w 0) 2) 1) (split f2 (cons f1 ls1) ls2))
+            (t (split f2 ls1 (cons f1 ls2)))
+        ))
+    (car w)
+    (cdr w)
     )
 )
 
-(print '(9 задача))
+(print '(test cases for 9 problem))
 (print (split '(1 2 3 4 5) () ()))
-;((1 3 5) (2 4)) 
 (print (split () () ()))
-;(NIL NIL) 
 
 
 ;Определите функцию, вычисляющую скалярное произведение векторов, заданных списками целых чисел.
