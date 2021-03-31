@@ -1,18 +1,20 @@
-;Определите функцию, заменяющую в исходном списке все вхождения заданного значения другим.
+;№3. Определите функцию, заменяющую в исходном списке все вхождения заданного значения другим.
 
-(defun rep (list x y)
-    (cond 
-        ((null list) nil)
-        ((equal (car list) y) (cons x (rep (cdr list) x y)))
-        (t (cons (car list) (rep (cdr list) x y)))
-    )
+(defun rep (lst val changeable)
+    ((lambda (f1 f2)
+        (cond 
+            ((null lst) nil)
+            ((equal f1 changeable) (cons val (rep f2 val changeable)))
+            (t (cons f1 (rep f2 val changeable)))
+        ))
+        (car lst)
+        (cdr lst)
+     )
 )
 
-(print '(3 задача))
+(print '(test cases for 3 problem))
 (print (rep '(2 2 4) 'a 2))
-;(A A 4) 
 (print (rep () 'a 2))
-;NIL 
 
 
 ;Определите функцию, переводящую список чисел в список соответствующих им названий.
