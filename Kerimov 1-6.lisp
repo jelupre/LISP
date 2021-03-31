@@ -17,30 +17,36 @@
 (print (rep () 'a 2))
 
 
-;Определите функцию, переводящую список чисел в список соответствующих им названий.
+;№6 Определите функцию, переводящую список чисел в список соответствующих им названий.
 
-(defun trans (list)
-    (cond 
-        ((null list) nil)
-        ((equal (car list) 0) (cons 'ноль (trans (cdr list))))
-        ((equal (car list) 1) (cons 'один (trans (cdr list))))
-        ((equal (car list) 2) (cons 'два (trans (cdr list))))
-        ((equal (car list) 3) (cons 'три (trans (cdr list))))
-        ((equal (car list) 4) (cons 'четыре (trans (cdr list))))
-        ((equal (car list) 5) (cons 'пять (trans (cdr list))))
-        ((equal (car list) 6) (cons 'шесть (trans (cdr list))))
-        ((equal (car list) 7) (cons 'семь (trans (cdr list))))        
-        ((equal (car list) 8) (cons 'восемь (trans (cdr list))))
-        ((equal (car list) 9) (cons 'девять (trans (cdr list))))
-        (t (cons (car list) (trans (cdr list))))
+(defun translate (val comparisons)
+    (cond
+        ((equal val 0) (car comparisons))
+        (t (translate (- val 1) (cdr comparisons)))
     )
 )
 
-(print '(6 задача))
-(print (trans '(1 2 3 1 2 0)))
-;(ОДИН ДВА ТРИ ОДИН ДВА НОЛЬ) 
-(print (trans ()))
-;NIL
+(defun transmute (lst output comparisons)
+    (cond
+        ((null lst) output)
+        (t (transmute (cdr lst) (cons (translate (car lst) comparisons) output) comparisons))
+    )
+)
+
+(defun rev (lst lst1)
+    (cond 
+        ((null lst) lst1)
+        (t (rev (cdr lst) (cons (car lst) lst1)))
+    )
+)
+
+(defun transmuted (lst) 
+    (rev (transmute lst () '(НОЛЬ ОДИН ДВА ТРИ ЧЕТЫРЕ ПЯТЬ ШЕСТЬ СЕМЬ ВОСЕМЬ ДЕВЯТЬ)) ()) 
+)
+
+(print '(test cases for 6 problem))
+(print (transmuted '(1 2 3 1 2 0)))
+(print (transmuted '()))
 
 
 ;№9. Определите функцию, разделяющую исходный список на два подсписка. Впервый из них должны попасть элементы с нечетными номерами, во второй элементы с четными номерами.
@@ -55,13 +61,6 @@
 (defun % (b a)
     (cond
         (t (- b (* a (floor b a))))
-    )
-)
-
-(defun rev (lst lst1)
-    (cond 
-        ((null lst)  lst1)
-        (t (rev (cdr lst) (cons (car lst) lst1)))
     )
 )
 
