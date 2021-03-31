@@ -169,3 +169,58 @@
 (print (МНОЖЕСТВО-Р '()))
 
 
+;№39. Определите функцию СИММЕТРИЧЕСКАЯ-РАЗНОСТЬ, формирующую множество из элементов не входящих в оба множества.
+
+(defun is_here (lst num)
+    (cond
+        ((null lst) NIL)
+        ((equal (car lst) num) T)
+        (t (is_here (cdr lst) num))
+    
+    )
+)
+
+(defun ПЕРЕСЕЧЕНИЕ (set1 set2 ans)
+    ((lambda (f1 f2)
+        (cond
+            ((null set1) ans)
+            ((is_here set2 f1) (cons f1 (ПЕРЕСЕЧЕНИЕ f2 set2 ans)))
+            (t (ПЕРЕСЕЧЕНИЕ f2 set2 ans)) 
+        ))
+        (car set1)
+        (cdr set1)
+    )
+)
+
+(defun РАЗНОСТЬ (set1 set2 ans)
+    ((lambda (f1 f2)
+        (cond
+            ((null set1) ans)
+            ((is_here set2 f1) (РАЗНОСТЬ f2 set2 ans))
+            (t (cons f1 (РАЗНОСТЬ f2 set2 ans)))
+        ))
+        (car set1)
+        (cdr set1)
+    )
+)
+
+(defun ОБЪЕДИНЕНИЕ_С_ПОВТОРАМИ (set1 set2 ans)
+    (cond
+        ((and (null set1) (null set2)) ans)
+        ((null set1) (ОБЪЕДИНЕНИЕ_С_ПОВТОРАМИ set1 (cdr set2) (cons (car set2) ans)))
+        (t (ОБЪЕДИНЕНИЕ_С_ПОВТОРАМИ (cdr set1) set2 (cons (car set1) ans)))
+    )
+)
+
+
+(defun СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ (set1 set2 ans)
+    (РАЗНОСТЬ (ОБЪЕДИНЕНИЕ_С_ПОВТОРАМИ set1 set2 ()) (ПЕРЕСЕЧЕНИЕ set1 set2 ()) ans) 
+)
+
+(print '(test cases for 39 problem))
+(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '(1 2 3 4) '(5 2 3 6) ()))
+(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '(1 4) '(5 2 3 6) ()))
+(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '(1 4) '(1 4) ()))
+(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '() '(5 2 3 6) ()))
+(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '(1 2 3 4) '() ()))
+(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '() '() ()))
