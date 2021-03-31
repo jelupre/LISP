@@ -116,31 +116,29 @@
 (print (rever ()))
 
 
-;Определите функцию (ПЕРВЫЙ-СОВПАДАЮЩИЙ х у), которая возвращает первый элемент, входящий в оба списка х и у, в противном случае NIL.
+;№31. Определите функцию (ПЕРВЫЙ-СОВПАДАЮЩИЙ х у), которая возвращает первый элемент, входящий в оба списка х и у, в противном случае NIL.
 
-(defun is_similar (x lst) 
+(defun is_similar (val lst) 
     (cond
-        ((eql (car lst) x) x)
+        ((eql (car lst) val) val)
         ((null lst) NIL)
-        (t (is_similar x (cdr lst)))
+        (t (is_similar val (cdr lst)))
     )
-
 )
 
-(defun ПЕРВЫЙ-СОВПАДАЮЩИЙ (x y)
-    (cond
-        ((null x) NIL)
-        ((eql (is_similar (car x) y) NIL) (ПЕРВЫЙ-СОВПАДАЮЩИЙ (cdr x) y))
-        (t (car x))
+(defun ПЕРВЫЙ-СОВПАДАЮЩИЙ (lst1 lst2)
+    ((lambda (f)    
+        (cond
+            ((null lst1) NIL)
+            ((eql (is_similar f lst2) NIL) (ПЕРВЫЙ-СОВПАДАЮЩИЙ (cdr lst1) lst2))
+            (t f)
+        ))
+        (car lst1)
     )
 )    
 
-(print '(31 задача))
+(print '(test cases for 31 problem))
 (print (ПЕРВЫЙ-СОВПАДАЮЩИЙ '(10 11 12 13) '(7 8 4 3 7)))
-;NIL 
 (print (ПЕРВЫЙ-СОВПАДАЮЩИЙ '(9 5 7 2 3) '(2 8 4 3 7)))
-;7 
 (print (ПЕРВЫЙ-СОВПАДАЮЩИЙ '() '(2 8 4 3 7)))
-;NIL 
 (print (ПЕРВЫЙ-СОВПАДАЮЩИЙ '(9 5 7 2 3) '()))
-;NIL 
