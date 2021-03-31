@@ -224,3 +224,20 @@
 (print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '() '(5 2 3 6) ()))
 (print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '(1 2 3 4) '() ()))
 (print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '() '() ()))
+
+
+;№41. Реализовать генератор деревьев, чтобы выдаваемые им деревья имели количество вершин, точно соответствующее числу, указанному в его первом аргументе.
+
+(defun get_tree (n tree)
+    (cond 
+        ((equal n 0) tree)
+        ((equal n 1) (get_tree (- n 1) (list n tree)))
+        (t (get_tree (- n 1) (cons n tree)))
+    )
+)
+
+(print '(test cases for 41 problem))
+(print (get_tree 0 ()))
+(print (get_tree 1 ()))
+(print (get_tree 5 ()))
+(print (get_tree 10 ()))
