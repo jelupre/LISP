@@ -1,0 +1,11 @@
+;№1. Определите FUNCALL через функционал APPLY.
+
+(defun MY_FUNCALL (func &rest args)
+    (APPLY func args)
+)
+
+(print '(test cases for 1 problem))
+(print (MY_FUNCALL '+ 1 2 3 4 5 6 7 8))
+(print (MY_FUNCALL '* 1 2))
+(print (MY_FUNCALL 'car '(a b 3 4)))
+(print (MY_FUNCALL 'cdr '(a b 3 4)))
