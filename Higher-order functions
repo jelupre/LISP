@@ -9,3 +9,25 @@
 (print (MY_FUNCALL '* 1 2))
 (print (MY_FUNCALL 'car '(a b 3 4)))
 (print (MY_FUNCALL 'cdr '(a b 3 4)))
+
+
+;№3. Определите функционал (APL-APPLY f x), который применяет каждую функцию fi
+;списка (f1 f2 ... fn) к соответствующему элементу списка x = (x1 x2 ... xn) и
+;возвращает список, сформированный из результатов.
+
+(defun rev (lst &optional (tsl '()))
+    (cond 
+        ((null lst) tsl)
+        (t (rev (cdr lst) (cons (car lst) tsl)))
+    )
+)
+
+(defun APL-APPLY (f x &optional (lst '()))
+    (cond 
+        ((null f) (rev lst))
+        (t (APL-APPLY (cdr f) (cdr x) (cons (APPLY (car f) (car x)) lst)))
+    )
+)
+
+(print '(test case for 3 problem))
+(print (APL-APPLY '(+ - * + car cdr) '((1 2) (3 4) (0 120) (1 2 3) ((1 2 3)) ((1 2 3)))))
