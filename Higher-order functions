@@ -50,3 +50,31 @@
 (print (НЕКОТОРЫЙ 'atom '((1) ((1 2 3)) ((1 2)) ((2 4 3)))))
 (print (НЕКОТОРЫЙ 'equal '((1 2) (1 7) (3 2))))
 (print (НЕКОТОРЫЙ 'equal '((1 2) (1 1) (3 2))))
+
+
+(defun my_delete (lst index &optional (ans '()) (cnt 1))
+    ((lambda (f1 f2 f3)
+    (cond    
+        ((null lst) (reverse ans))
+        ((equal cnt index) (my_delete f2 index ans f3))
+        (t (my_delete f2 index (cons f1 ans) f3))
+    ))
+        (car lst)
+        (cdr lst)
+        (+ cnt 1)
+    )
+)
+
+
+(defun УДАЛИТЬ_ЕСЛИ_НЕ (f lst &optional (current_lst '()) (cnt 0))
+    (cond
+        ((equal cnt 0) (УДАЛИТЬ_ЕСЛИ_НЕ f lst lst (+ cnt 1)))
+        ((null current_lst) lst)
+        ((FUNCALL f (car current_lst)) (УДАЛИТЬ_ЕСЛИ_НЕ f lst (cdr current_lst) (+ cnt 1)))
+        (t (УДАЛИТЬ_ЕСЛИ_НЕ f (my_delete lst cnt) (cdr current_lst) cnt)) 
+    )
+)
+
+
+(print (УДАЛИТЬ_ЕСЛИ_НЕ 'atom '((1 2 3) 1 2 3 (7 8))))
+(print (УДАЛИТЬ_ЕСЛИ_НЕ 'equal '('(1 2))))
