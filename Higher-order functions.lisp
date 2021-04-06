@@ -88,7 +88,7 @@
 (defun Fib (n &optional (lst '(1 0)) (a 0) (b 1))
     ((lambda (c)
     (cond        
-        ((equal n 0) (reverse lst))
+        ((equal n 0) (rev lst))
         (t (Fib (- n 1) (cons c lst) b c))        
      ))
      (+ a b)
@@ -100,3 +100,18 @@
 (print (Fib 6))
 (print (Fib 12))
 (print (Fib 20))
+
+
+;№11. Определите фукнционал МНОГОФУН, который использует функции, являющиеся аргументами, 
+;по следующей схеме: (МНОГОФУН ’(f g ... h) x) ⇔ (LIST (f x) (g x) ... (h x)).
+
+(defun МНОГОФУН (f_lst arg &optional (ans '()))
+    (cond
+        ((null f_lst) (rev ans))
+        (t (МНОГОФУН (cdr f_lst) arg (cons (APPLY (car f_lst) arg) ans)))
+    )
+)
+
+(print '(test case for 11 problem))
+(print (МНОГОФУН '(+ - * / equal < >) '(45 5)))
+(print (МНОГОФУН '(atom car cdr) '((5 4 7))))
