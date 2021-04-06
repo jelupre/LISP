@@ -52,6 +52,9 @@
 (print (НЕКОТОРЫЙ 'equal '((1 2) (1 1) (3 2))))
 
 
+;№7. Определите фильтр (УДАЛИТЬ-ЕСЛИ-НЕ пред список), удаляющий из списка список все элементы, 
+;которые не обладают свойством, наличие которого проверяет предикат пред.
+
 (defun my_delete (lst index &optional (ans '()) (cnt 1))
     ((lambda (f1 f2 f3)
     (cond    
@@ -70,11 +73,12 @@
     (cond
         ((equal cnt 0) (УДАЛИТЬ_ЕСЛИ_НЕ f lst lst (+ cnt 1)))
         ((null current_lst) lst)
-        ((FUNCALL f (car current_lst)) (УДАЛИТЬ_ЕСЛИ_НЕ f lst (cdr current_lst) (+ cnt 1)))
+        ((APPLY f (car current_lst)) (УДАЛИТЬ_ЕСЛИ_НЕ f lst (cdr current_lst) (+ cnt 1)))
         (t (УДАЛИТЬ_ЕСЛИ_НЕ f (my_delete lst cnt) (cdr current_lst) cnt)) 
     )
 )
 
 
-(print (УДАЛИТЬ_ЕСЛИ_НЕ 'atom '((1 2 3) 1 2 3 (7 8))))
-(print (УДАЛИТЬ_ЕСЛИ_НЕ 'equal '('(1 2))))
+(print '(test case for 7 problem))
+(print (УДАЛИТЬ_ЕСЛИ_НЕ 'atom '(((1 2 3)) (1) (2) (3) ((7 8)))))
+(print (УДАЛИТЬ_ЕСЛИ_НЕ 'equal '((1 1) (1 2) (2 2))))
