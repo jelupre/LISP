@@ -78,7 +78,25 @@
     )
 )
 
-
 (print '(test case for 7 problem))
 (print (УДАЛИТЬ_ЕСЛИ_НЕ 'atom '(((1 2 3)) (1) (2) (3) ((7 8)))))
 (print (УДАЛИТЬ_ЕСЛИ_НЕ 'equal '((1 1) (1 2) (2 2))))
+
+
+;№9. Напишите генератор порождения чисел Фибоначчи: 0, 1, 1, 2, 3, 5, ...
+
+(defun Fib (n &optional (lst '(1 0)) (a 0) (b 1))
+    ((lambda (c)
+    (cond        
+        ((equal n 0) (reverse lst))
+        (t (Fib (- n 1) (cons c lst) b c))        
+     ))
+     (+ a b)
+     )
+)
+
+(print '(test cases for 9 problem))
+(print (Fib 1))
+(print (Fib 6))
+(print (Fib 12))
+(print (Fib 20))
