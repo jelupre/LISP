@@ -247,3 +247,28 @@
 (print (get_tree 1))
 (print (get_tree 5))
 (print (get_tree 10))
+
+
+;№48. Функция GET возвращает в качестве результата NIL в том случае, если у 
+;символа нет данного свойства, либо если значением этого свойства является NIL.
+;Следовательно, функцией GET нельзя проверить, есть ли некоторое свойство в
+;списке свойств. Напишите предикат (ИМЕЕТ-СВОЙСТВО символ свойство), который 
+;проверяет, обладает ли символ данным свойством.
+
+(defun ИМЕЕТ-СВОЙСТВО (symbol property &optional (prop_lst (symbol-plist symbol)))
+    (cond
+        ((null prop_lst) (list property 'does 'not 'exist))
+        ((equal (car prop_lst) property) (list property (get symbol property)))
+        (t (ИМЕЕТ-СВОЙСТВО symbol property (cdr prop_lst)))
+    )
+)
+
+(setf (getf (symbol-plist 'car) 'color) 'blue)
+(setf (getf (symbol-plist 'car) 'brand) 'BMW)
+(setf (getf (symbol-plist 'car) 'type) NIL)
+
+(print '(test cases for 48 problem))
+(print (ИМЕЕТ-СВОЙСТВО 'car 'color))
+(print (ИМЕЕТ-СВОЙСТВО 'car 'brand))
+(print (ИМЕЕТ-СВОЙСТВО 'car 'type))
+(print (ИМЕЕТ-СВОЙСТВО 'car 'door))
