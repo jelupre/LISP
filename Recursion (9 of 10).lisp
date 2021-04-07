@@ -1,11 +1,12 @@
-;№3. Определите функцию, заменяющую в исходном списке все вхождения заданного значения другим.
+;№3. Определите функцию, заменяющую в исходном списке все вхождения 
+;заданного значения другим.
 
-(defun rep (lst val changeable)
+(defun my_replace (lst val changeable)
     ((lambda (f1 f2)
         (cond 
             ((null lst) nil)
-            ((equal f1 changeable) (cons val (rep f2 val changeable)))
-            (t (cons f1 (rep f2 val changeable)))
+            ((equal f1 changeable) (cons val (my_replace f2 val changeable)))
+            (t (cons f1 (my_replace f2 val changeable)))
         ))
         (car lst)
         (cdr lst)
@@ -13,23 +14,24 @@
 )
 
 (print '(test cases for 3 problem))
-(print (rep '(2 2 4) 'a 2))
-(print (rep () 'a 2))
+(print (my_replace '(2 2 4) 'a 2))
+(print (my_replace () 'a 2))
 
 
 ;№6 Определите функцию, переводящую список чисел в список соответствующих им названий.
 
-(defun translate (val comparisons)
+(defun translate (val &optional (comparisons '(НОЛЬ ОДИН ДВА ТРИ ЧЕТЫРЕ ПЯТЬ 
+                                                    ШЕСТЬ СЕМЬ ВОСЕМЬ ДЕВЯТЬ)))
     (cond
         ((equal val 0) (car comparisons))
         (t (translate (- val 1) (cdr comparisons)))
     )
 )
 
-(defun transmute (lst output comparisons)
+(defun transmute (lst &optional (output ()))
     (cond
         ((null lst) output)
-        (t (transmute (cdr lst) (cons (translate (car lst) comparisons) output) comparisons))
+        (t (transmute (cdr lst) (cons (translate (car lst)) output)))
     )
 )
 
@@ -40,16 +42,14 @@
     )
 )
 
-(defun transmuted (lst) 
-    (rev (transmute lst () '(НОЛЬ ОДИН ДВА ТРИ ЧЕТЫРЕ ПЯТЬ ШЕСТЬ СЕМЬ ВОСЕМЬ ДЕВЯТЬ)) ()) 
-)
-
 (print '(test cases for 6 problem))
-(print (transmuted '(1 2 3 1 2 0)))
-(print (transmuted '()))
+(print (transmute '(1 2 3 1 2 0)))
+(print (transmute '()))
 
 
-;№9. Определите функцию, разделяющую исходный список на два подсписка. Впервый из них должны попасть элементы с нечетными номерами, во второй элементы с четными номерами.
+;№9. Определите функцию, разделяющую исходный список на два подсписка. 
+;Впервый из них должны попасть элементы с нечетными номерами, во второй 
+;элементы с четными номерами.
 
 (defun len (w n)
     (cond 
@@ -64,7 +64,7 @@
     )
 )
 
-(defun split (w ls1 ls2)
+(defun split (w &optional (ls1 ()) (ls2 ()))
     ((lambda (f1 f2)
         (cond
             ((null w) (list (rev ls1 ()) (rev ls2 ())))
@@ -77,13 +77,14 @@
 )
 
 (print '(test cases for 9 problem))
-(print (split '(1 2 3 4 5) () ()))
-(print (split () () ()))
+(print (split '(1 2 3 4 5)))
+(print (split ()))
 
 
-;№15. Определите функцию, вычисляющую скалярное произведение векторов, заданных списками целых чисел.
+;№15. Определите функцию, вычисляющую скалярное произведение векторов, 
+;заданных списками целых чисел.
 
-(defun inner_product (lst1 lst2 sum)
+(defun inner_product (lst1 lst2 &optional (sum 0))
     (cond
         ((null lst1) sum)
         (t (+ (inner_product (cdr lst1) (cdr lst2) sum) (* (car lst1) (car lst2))))
@@ -91,29 +92,31 @@
 )
 
 (print '(test cases for 15 problem))
-(print (inner_product '(1 2 3) '(4 5 6) 0))
-(print (inner_product () () 0))
+(print (inner_product '(1 2 3) '(4 5 6)))
+(print (inner_product () ()))
 
 
-;№22. Определите функцию,которая обращает список (а b с) и разбивает его на уровни (((с) b) а).
+;№22. Определите функцию,которая обращает список (а b с) и разбивает 
+;его на уровни (((с) b) а).
 
-(defun rever (lst)
+(defun reverse_and_split (lst)
     ((lambda (f)
         (cond 
             ((atom f) lst)
-            (t (list (rever f) (car lst)))
+            (t (list (reverse_and_split f) (car lst)))
         ))
         (cdr lst)
     )
 )
 
 (print '(test cases for 22 problem))
-(print (rever '(1 2 3 4)))
-(print (rever '(1)))
-(print (rever ()))
+(print (reverse_and_split '(1 2 3 4)))
+(print (reverse_and_split '(1)))
+(print (reverse_and_split ()))
 
 
-;№31. Определите функцию (ПЕРВЫЙ-СОВПАДАЮЩИЙ х у), которая возвращает первый элемент, входящий в оба списка х и у, в противном случае NIL.
+;№31. Определите функцию (ПЕРВЫЙ-СОВПАДАЮЩИЙ х у), которая возвращает первый 
+;элемент, входящий в оба списка х и у, в противном случае NIL.
 
 (defun is_similar (val lst) 
     (cond
@@ -141,7 +144,8 @@
 (print (ПЕРВЫЙ-СОВПАДАЮЩИЙ '(9 5 7 2 3) '()))
 
 
-;№32. Определите предикат МНОЖЕСТВО-Р, который проверяет, является ли список множеством, т.е. входит ли каждый элемент в список лишь один раз.
+;№32. Определите предикат МНОЖЕСТВО-Р, который проверяет, является ли список 
+;множеством, т.е. входит ли каждый элемент в список лишь один раз.
 
 (defun how_much (lst num cnt)
     (cond
@@ -169,7 +173,8 @@
 (print (МНОЖЕСТВО-Р '()))
 
 
-;№39. Определите функцию СИММЕТРИЧЕСКАЯ-РАЗНОСТЬ, формирующую множество из элементов не входящих в оба множества.
+;№39. Определите функцию СИММЕТРИЧЕСКАЯ-РАЗНОСТЬ, формирующую множество из 
+;элементов не входящих в оба множества.
 
 (defun is_here (lst num)
     (cond
@@ -180,7 +185,7 @@
     )
 )
 
-(defun ПЕРЕСЕЧЕНИЕ (set1 set2 ans)
+(defun ПЕРЕСЕЧЕНИЕ (set1 set2 &optional (ans ()))
     ((lambda (f1 f2)
         (cond
             ((null set1) ans)
@@ -192,7 +197,7 @@
     )
 )
 
-(defun РАЗНОСТЬ (set1 set2 ans)
+(defun РАЗНОСТЬ (set1 set2 &optional (ans ()))
     ((lambda (f1 f2)
         (cond
             ((null set1) ans)
@@ -204,7 +209,7 @@
     )
 )
 
-(defun ОБЪЕДИНЕНИЕ_С_ПОВТОРАМИ (set1 set2 ans)
+(defun ОБЪЕДИНЕНИЕ_С_ПОВТОРАМИ (set1 set2 &optional (ans ()))
     (cond
         ((and (null set1) (null set2)) ans)
         ((null set1) (ОБЪЕДИНЕНИЕ_С_ПОВТОРАМИ set1 (cdr set2) (cons (car set2) ans)))
@@ -213,22 +218,23 @@
 )
 
 
-(defun СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ (set1 set2 ans)
-    (РАЗНОСТЬ (ОБЪЕДИНЕНИЕ_С_ПОВТОРАМИ set1 set2 ()) (ПЕРЕСЕЧЕНИЕ set1 set2 ()) ans) 
+(defun СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ (set1 set2 &optional (ans ()))
+    (РАЗНОСТЬ (ОБЪЕДИНЕНИЕ_С_ПОВТОРАМИ set1 set2) (ПЕРЕСЕЧЕНИЕ set1 set2)) 
 )
 
 (print '(test cases for 39 problem))
-(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '(1 2 3 4) '(5 2 3 6) ()))
-(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '(1 4) '(5 2 3 6) ()))
-(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '(1 4) '(1 4) ()))
-(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '() '(5 2 3 6) ()))
-(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '(1 2 3 4) '() ()))
-(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '() '() ()))
+(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '(1 2 3 4) '(5 2 3 6)))
+(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '(1 4) '(5 2 3 6)))
+(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '(1 4) '(1 4)))
+(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '() '(5 2 3 6)))
+(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '(1 2 3 4) '()))
+(print (СИММЕТРИЧЕСКАЯ_РАЗНОСТЬ '() '()))
 
 
-;№41. Реализовать генератор деревьев, чтобы выдаваемые им деревья имели количество вершин, точно соответствующее числу, указанному в его первом аргументе.
+;№41. Реализовать генератор деревьев, чтобы выдаваемые им деревья имели 
+;количество вершин, точно соответствующее числу, указанному в его первом аргументе.
 
-(defun get_tree (n tree)
+(defun get_tree (n &optional (tree ()))
     (cond 
         ((equal n 0) tree)
         ((equal n 1) (get_tree (- n 1) (list n tree)))
@@ -237,7 +243,7 @@
 )
 
 (print '(test cases for 41 problem))
-(print (get_tree 0 ()))
-(print (get_tree 1 ()))
-(print (get_tree 5 ()))
-(print (get_tree 10 ()))
+(print (get_tree 0))
+(print (get_tree 1))
+(print (get_tree 5))
+(print (get_tree 10))
