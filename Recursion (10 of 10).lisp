@@ -259,7 +259,7 @@
     (cond
         ((null prop_lst) (list property 'does 'not 'exist))
         ((equal (car prop_lst) property) (list property (get symbol property)))
-        (t (ИМЕЕТ-СВОЙСТВО symbol property (cdr prop_lst)))
+        (t (ИМЕЕТ-СВОЙСТВО symbol property (cddr prop_lst)))
     )
 )
 
