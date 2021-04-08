@@ -85,21 +85,22 @@
 
 ;№9. Напишите генератор порождения чисел Фибоначчи: 0, 1, 1, 2, 3, 5, ...
 
-(defun Fib (n &optional (lst '(1 0)) (a 0) (b 1))
-    ((lambda (c)
-    (cond        
-        ((equal n 0) (rev lst))
-        (t (Fib (- n 1) (cons c lst) b c))        
-     ))
-     (+ a b)
-     )
+(let ((cnt 0) (curr 1) (prev 0))
+    (defun Fib  ()
+        (cond 
+            ((equal cnt 0) (setq cnt 1 curr 1 prev 0))
+            (t (let ((tmp curr)) (setq curr (+ curr prev) prev tmp)))
+        )
+    )
 )
 
 (print '(test cases for 9 problem))
-(print (Fib 1))
-(print (Fib 6))
-(print (Fib 12))
-(print (Fib 20))
+(print (Fib))
+(print (Fib))
+(print (Fib))
+(print (Fib))
+(print (Fib))
+(print (Fib))
 
 
 ;№11. Определите фукнционал МНОГОФУН, который использует функции, являющиеся аргументами, 
